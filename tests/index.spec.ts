@@ -9,3 +9,7 @@ export type RootStore = CounterStore & TimerStore;
 assert<IsExact<RootStore['state']['counter']['count'], number>>(true);
 assert<Has<keyof RootStore['state']['counter'], 'count'>>(true);
 assert<NotHas<keyof RootStore['state']['counter'], 'unknown'>>(true);
+
+declare var $store: RootStore;
+
+$store.dispatch('counter/fetchData', '');
