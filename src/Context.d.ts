@@ -15,13 +15,10 @@ import {
   BaseActions,
   BaseStoreModule
 } from './Base';
+import { PickKeyWithPayload, PickKeyWithoutPayload } from './Utils';
 
 /** ベースのペイロード */
 export type BasePayload = { type: string };
-/** ペイロードを取得（Optionalを区別しない） */
-export type WeakPayload<F extends (...args: any) => any> = F extends (ctx, payload: infer P) => any
-  ? P
-  : {};
 
 /** Gettersを定義 */
 export type DefineGetters<G> = G extends Record<string, (...args: any) => any> ? {
@@ -29,12 +26,12 @@ export type DefineGetters<G> = G extends Record<string, (...args: any) => any> ?
 } : never;
 /** Commit */
 export type DefineCommit<M> = M extends Record<string, (...args: any) => any> ? {
-  <K extends keyof M>(type: K, payload: Payload<M[K]>): void;
-  <K extends keyof M>(payloadWithType: BasePayload & WeakPayload<M[K]>): void;
+  // @ts-ignore
+  <K extends PickKeyWithPayload<M>>(type: K, payload: Payload<M[K]>, options?: CommitOptions): void;
+  <K extends PickKeyWithoutPayload<M>>(type: K, payload?: never, options?: CommitOptions): void;
 
   // フォールバック
   (type: string, payload: any, options: CommitOptions): void;
-  (payloadWithType: BasePayload, options: CommitOptions): void;
 } : never;
 
 /** ActionContext */

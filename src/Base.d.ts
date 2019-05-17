@@ -22,18 +22,18 @@ export type BaseStoreModule = {
 }
 
 /** Commit, Dispatchでのペイロードを取得 */
-export type WeakPayload<F extends (...args: any) => any> = F extends (ctx, payload: infer P) => any
+export type Payload<F extends (...args: any) => any, Default = never> = F extends (ctx, payload: infer P) => any
   ? P
-  : never;
+  : Default;
 /** Commit */
 export type Commit<M extends BaseMutations> = {
   // @ts-ignore
-  <K extends PickKeyWithPayload<M>>(type: K, payload: WeakPayload<M[K]>, options?: CommitOptions): void;
+  <K extends PickKeyWithPayload<M>>(type: K, payload: Payload<M[K]>, options?: CommitOptions): void;
   <K extends PickKeyWithoutPayload<M>>(type: K, payload?: never, options?: CommitOptions): void;
 }
 /** Dispatch */
 export type Disaptch<A extends BaseActions> = {
   // @ts-ignore
-  <K extends PickKeyWithPayload<A>>(type: K, payload: WeakPayload<A[K]>, options?: DispatchOptions): ReturnType<A[K]>;
+  <K extends PickKeyWithPayload<A>>(type: K, payload: Payload<A[K]>, options?: DispatchOptions): ReturnType<A[K]>;
   <K extends PickKeyWithoutPayload<A>>(type: K, payload?: never, options?: CommitOptions): ReturnType<A[K]>;
 }

@@ -40,8 +40,12 @@ export const mutations = {
 type Ctx = DefineActionContext<IState, typeof getters, typeof mutations>;
 
 export const actions = {
-  async fetchData({ }: Ctx, payload: string): Promise<void> {},
-  fetchWithData({  }: Ctx): void {}
+  async fetchData({ getters, commit }: Ctx, payload: string): Promise<void> {
+    commit('updateCount', getters.xCount(2));
+  },
+  fetchWithData({ commit }: Ctx): void {
+    commit('resetCount');
+  }
 }
 
 export type State = IState;
