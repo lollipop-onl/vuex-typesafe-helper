@@ -15,3 +15,23 @@ export type Convertor<
 > = P extends Record<string, string> ? {
   [K in keyof P]: A[P[K]];
 } : never;
+
+/**
+ * ペイロードがあるプロパティのキーを取り出す
+ */
+export type PickKeyWithPayload<P> = P extends Record<string, (...args: any) => any>
+  ?
+    Values<{
+      [K in keyof P]: P[K] extends (context: any) => any ? undefined : K
+    }>
+  : never;
+
+/**
+ * ペイロードがないプロパティのキーを取り出す
+ */
+export type PickKeyWithoutPayload<P> = P extends Record<string, (...args: any) => any>
+?
+  Values<{
+    [K in keyof P]: P[K] extends (context: any) => any ? K : undefined;
+  }>
+: never;

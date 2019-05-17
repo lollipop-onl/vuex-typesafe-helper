@@ -2,7 +2,8 @@
  * @file ストアのベースとなる型
  */
 
-import { CommitOptions } from 'vuex';
+import { CommitOptions, DispatchOptions } from 'vuex';
+import { PickKeyWithPayload, PickKeyWithoutPayload } from './Utils';
 
 /** State */
 export type BaseState = Record<string, any>;
@@ -27,9 +28,13 @@ export type Payload<F extends (...args: any) => any, O = any> = F extends (conte
   : [undefined?, O?];
 /** Commit */
 export type Commit<M extends BaseMutations> = {
-  <K extends keyof M>(type: K, ...payload: Payload<M[K], CommitOptions>): void;
+  // @ts-ignore
+  <K extends PickKeyWithPayload<M>>(type: K, payload: Payload<M[K]>, options?: CommitOptions): void;
+  <K extends PickKeyWithoutPayload<M>>(type: K, payload?: never, options?: CommitOptions): void;
 }
 /** Dispatch */
 export type Disaptch<A extends BaseActions> = {
-  <K extends keyof A>(type: K, ...payload: Payload<A[K]>): ReturnType<A[K]>;
+  // @ts-ignore
+  <K extends PickKeyWithPayload<A>>(type: K, payload: Payload<A[K]>, options?: DispatchOptions): ReturnType<A[K]>;
+  <K extends PickKeyWithoutPayload<A>>(type: K, payload?: never, options?: DispatchOptions): ReturnType<A[K]>;
 }
