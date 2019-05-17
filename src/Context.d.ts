@@ -24,18 +24,18 @@ export type WeakPayload<F extends (...args: any) => any> = F extends (ctx, paylo
   : {};
 
 /** Gettersを定義 */
-export type DefineGetters<G extends Record<string, (...args: any) => any>> = {
+export type DefineGetters<G> = G extends Record<string, (...args: any) => any> ? {
   [K in keyof G]: G[K] extends (state) => infer R ? R : never;
-};
+} : never;
 /** Commit */
-export type DefineCommit<M extends Record<string, (...args: any) => any>> = {
+export type DefineCommit<M> = M extends Record<string, (...args: any) => any> ? {
   <K extends keyof M>(type: K, ...payload: Payload<M[K]>): void;
   <K extends keyof M>(payloadWithType: BasePayload & WeakPayload<M[K]>): void;
 
   // フォールバック
   (type: string, payload: any, options: CommitOptions): void;
   (payloadWithType: BasePayload, options: CommitOptions): void;
-};
+} : never;
 
 /** ActionContext */
 export interface DefineActionContext<
