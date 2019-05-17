@@ -29,7 +29,7 @@ export type DefineGetters<G> = G extends Record<string, (...args: any) => any> ?
 } : never;
 /** Commit */
 export type DefineCommit<M> = M extends Record<string, (...args: any) => any> ? {
-  <K extends keyof M>(type: K, ...payload: Payload<M[K]>): void;
+  <K extends keyof M>(type: K, payload: Payload<M[K]>): void;
   <K extends keyof M>(payloadWithType: BasePayload & WeakPayload<M[K]>): void;
 
   // フォールバック
