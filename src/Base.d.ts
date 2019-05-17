@@ -9,7 +9,7 @@ export type BaseState = Record<string, any>;
 /** Getters */
 export type BaseGetters = Record<string, any>;
 /** Mutations */
-export type BaseMutations = Record<string,(...args: any) => void>;
+export type BaseMutations = Record<string, (...args: any) => void>;
 /** Actions */
 export type BaseActions = Record<string, (...args: any) => any>;
 /** StoreModule */

@@ -1,5 +1,6 @@
 import {
   Convertor,
+  DefineActionContext,
   DefineStoreModule
 } from '../../';
 
@@ -36,9 +37,11 @@ export const mutations = {
 
 // * Actions
 
+type Ctx = DefineActionContext<IState, typeof getters, typeof mutations>;
+
 export const actions = {
-  async fetchData({}, payload: string): Promise<void> {},
-  fetchWithData({}): void {}
+  async fetchData({ }: Ctx, payload: string): Promise<void> {},
+  fetchWithData({  }: Ctx): void {}
 }
 
 export type State = IState;
