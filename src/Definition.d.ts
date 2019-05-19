@@ -14,7 +14,13 @@ import {
 } from './Base';
 
 /** State */
-export type DefineState<N extends string, S> = S extends BaseState ? { [K in N]: S } : never;
+export type DefineState<N extends string, S> = 
+  S extends BaseState
+    ? N extends ''
+      ? S
+      : { [K in N]: S }
+    : never;
+
 /** Getters */
 export type DefineGetters<G extends BaseGetters> = {
   [K in keyof G]: ReturnType<G[K]>;

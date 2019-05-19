@@ -118,6 +118,55 @@ export class MyComponent extends Vue {
 }
 ```
 
-# License
+### Step X. In root module
+
+```ts
+// store/index.ts
+
+import { Context } from '@nuxt/vue-app';
+import {
+  DefineActionContext,
+  DefineStoreModule,
+  Omit
+} from '@lollipop-onl/vuex-typesafe-helper';
+
+// * State
+
+export interface IState {
+  loading: boolean;
+}
+
+export const state = (): IState => ({
+  loading: false
+});
+
+// * Getters
+
+export const getters = {}
+
+
+// * Mutations
+
+export const mutations = {
+  updateLoadingStatus(state: IState, status: boolean) {
+    state.loading = status;
+  }
+}
+
+// * Actions
+
+type Ctx = DefineActionContext<IState, typeof getters, typeof mutations>;
+
+export const actions = {
+  async nuxtServerInit({ state }: Ctx, { app }: Context): Promise<void> {},
+  async initialize({}: Ctx, token: string): Promise<void> {}
+}
+
+// No couversion required
+export type Store = DefineStoreModule<'', IState, typeof getters, typeof mutations, Omit<typeof actions, 'nuxtServerInit'>>;
+
+```
+
+## License
 
 MIT

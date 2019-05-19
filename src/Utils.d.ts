@@ -49,3 +49,8 @@ export type PickKeyWithoutPayload<P> = P extends Record<string, (...args: any) =
     [K in keyof P]: P[K] extends (context: any) => any ? K : undefined;
   }>
 : never;
+
+/**
+ * Omit
+ */
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
