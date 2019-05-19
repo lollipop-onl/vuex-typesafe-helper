@@ -1,12 +1,15 @@
 {
   "name": "@lollipop-onl/vuex-typesafe-helper",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Vuex minimaly typesafe system",
   "main": "index.d.ts",
   "scripts": {},
   "author": "lollipop.onl",
   "license": "MIT",
-  "keywords": ["vue", "typescript"],
+  "keywords": [
+    "vue",
+    "typescript"
+  ],
   "repository": {
     "type": "git",
     "url": "git+ssh://git@gitlab.com/lollipop.onl/vuex-typesafe-helper.git"
