@@ -26,7 +26,7 @@ import {
   DefineStoreModule
 } from '@lollipop-onl/vuex-typesafe-helper';
 
-// Define interface only state
+// Only define interface of state
 export interface IState {
   count: number;
 }
