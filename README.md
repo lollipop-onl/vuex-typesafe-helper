@@ -1,6 +1,6 @@
 # vuex-typesafe-helper
 
-Minimaly typesafe helper for Vuex.
+Helper of typesafe Vuex with minimal expansion.
 
 Inspired by [takefumi-yoshii/ts-nuxtjs-express](https://github.com/takefumi-yoshii/ts-nuxtjs-express).
 
@@ -26,6 +26,7 @@ import {
   DefineStoreModule
 } from '@lollipop-onl/vuex-typesafe-helper';
 
+// Define interface only state
 export interface IState {
   count: number;
 }
@@ -33,6 +34,8 @@ export const state = (): IState => ({
   count: 0
 });
 
+// Convert to global name
+// It is an error if there is excess or deficiency
 export type Getters = Convertor<typeof getters, {
   'counter/isOdd', 'isOdd'
 }>;
@@ -65,6 +68,7 @@ export const actions = {
   }
 };
 
+// Define store module type
 export type Store = DefineStoreModule<'counter', IState, Getters, Mutations, Actions>;
 ```
 
@@ -74,7 +78,7 @@ export type Store = DefineStoreModule<'counter', IState, Getters, Mutations, Act
 // types/vuex.d.ts
 
 import { Store as CounterStore } from '@/store/counter';
-import { Store as AuthStore } from '@/store/counter';
+import { Store as AuthStore } from '@/store/auth';
 
 export type RootStore = CounterStore & AuthStore;
 ```
@@ -85,7 +89,7 @@ export type RootStore = CounterStore & AuthStore;
 import { Component, Vue } from 'nuxt-property-decorator';
 import { RootStore } from '@/types/vuex';
 
-@component
+@Component
 export class MyComponent extends Vue {
   $store!: RootStore;
 
@@ -97,9 +101,10 @@ export class MyComponent extends Vue {
   }
 
   increment() {
-    const { commit } = this.$store;
+    const { state, commit } = this.$store;
     
-    commit('counter/updateCount', 1);
+    // Type and payload are type safe
+    commit('counter/updateCount', state.counter.count + 1);
   }
 
   async syncCount(count: number) {
