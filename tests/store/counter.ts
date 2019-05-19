@@ -71,8 +71,4 @@ export type Actions = Convertor<typeof actions, {
   'counter/fetchData': 'fetchData',
   'counter/fetchWithData': 'fetchWithData'
 }>;
-export type Module = DefineStoreModule<'counter', State, Getters, Mutations, Actions>;
-
-declare var $store: Module;
-
-const a = $store.commit('counter/addCount', 1);
+export type Store = DefineStoreModule<'counter', State, Getters, Mutations, Actions>;

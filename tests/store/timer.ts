@@ -42,4 +42,4 @@ export type Actions = Convertor<typeof actions, {
   'timer/fetchData': 'fetchData',
   'timer/fetchWithData': 'fetchWithData'
 }>;
-export type Module = DefineStoreModule<'timer', State, Getters, Mutations, Actions>;
+export type Store = DefineStoreModule<'timer', State, Getters, Mutations, Actions>;

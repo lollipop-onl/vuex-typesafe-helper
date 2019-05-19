@@ -1,6 +1,6 @@
 import { assert, IsExact, Has, NotHas } from 'conditional-type-checks';
-import { Module as CounterStore } from './store/counter';
-import { Module as TimerStore } from './store/timer';
+import { Store as CounterStore } from './store/counter';
+import { Store as TimerStore } from './store/timer';
 
 export type RootStore = CounterStore & TimerStore;
 
