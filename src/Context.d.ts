@@ -12,7 +12,6 @@ import {
   BaseState,
   BaseGetters,
   BaseMutations,
-  BaseActions,
   BaseStoreModule
 } from './Base';
 import { PickKeyWithPayload, PickKeyWithoutPayload } from './Utils';
@@ -21,24 +20,24 @@ import { PickKeyWithPayload, PickKeyWithoutPayload } from './Utils';
 export type BasePayload = { type: string };
 
 /** Gettersを定義 */
-export type DefineGetters<G> = G extends Record<string, (...args: any) => any> ? {
-  [K in keyof G]: G[K] extends (state) => infer R ? R : never;
-} : never;
+export type DefineGetters<G extends BaseGetters> = {
+  [K in keyof G]: G[K] extends (...args: any) => infer R ? R : never;
+};
 /** Commit */
-export type DefineCommit<M> = M extends Record<string, (...args: any) => any> ? {
+export type DefineCommit<M extends BaseMutations> = {
   // @ts-ignore
   <K extends PickKeyWithPayload<M>>(type: K, payload: Payload<M[K]>, options?: CommitOptions): void;
-  <K extends PickKeyWithoutPayload<M>>(type: K, payload?: never, options?: CommitOptions): void;
+  <K extends PickKeyWithoutPayload<M>>(type: K, payload?: Payload<M[K]>, options?: CommitOptions): void;
 
   // フォールバック
   (type: string, payload: any, options: CommitOptions): void;
-} : never;
+};
 
 /** ActionContext */
 export interface DefineActionContext<
-  S extends BaseStoreModule['State'] = never,
-  G extends BaseStoreModule['Getters'] = never,
-  M extends BaseStoreModule['Mutations'] = never
+  S extends BaseState = never,
+  G extends BaseGetters = never,
+  M extends BaseMutations = never
 > extends BaseActionContext<S, any> {
   getters: DefineGetters<G>;
   commit: DefineCommit<M>;

@@ -8,7 +8,7 @@ import { PickKeyWithPayload, PickKeyWithoutPayload } from './Utils';
 /** State */
 export type BaseState = Record<string, any>;
 /** Getters */
-export type BaseGetters = Record<string, any>;
+export type BaseGetters = Record<string, (...args: any) => any>;
 /** Mutations */
 export type BaseMutations = Record<string, (...args: any) => void>;
 /** Actions */
@@ -16,7 +16,7 @@ export type BaseActions = Record<string, (...args: any) => any>;
 /** StoreModule */
 export type BaseStoreModule = {
   State?: BaseState;
-  Getters?: BaseGetters;
+  Getters?: Record<string, any>;
   Mutations?: BaseMutations;
   Actions?: BaseActions;
 }

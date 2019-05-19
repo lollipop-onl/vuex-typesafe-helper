@@ -6,7 +6,17 @@
   "scripts": {},
   "author": "lollipop.onl",
   "license": "MIT",
-  "keywords": [],
+  "keywords": ["vue", "typescript"],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/lollipop.onl/vuex-typesafe-helper.git"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/lollipop.onl/vuex-typesafe-helper/issues"
+  },
+  "files": [
+    "src/**/*"
+  ],
   "dependencies": {
     "typescript": "^3.4.5",
     "vue": "^2.6.10",

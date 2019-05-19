@@ -16,25 +16,21 @@ import {
 /** State */
 export type DefineState<N extends string, S> = S extends BaseState ? { [K in N]: S } : never;
 /** Getters */
-export type DefineGetters<G> = G extends BaseGetters ? {
+export type DefineGetters<G extends BaseGetters> = {
   [K in keyof G]: ReturnType<G[K]>;
-} : never;
+}
 /** Mutations */
-export type DefineMutations<M> = M extends BaseMutations
-  ? Commit<M>
-  : never;
+export type DefineMutations<M extends BaseMutations> = Commit<M>;
 /** Actions */
-export type DefineActions<A> = A extends BaseActions
-  ? Disaptch<A>
-  : never;
+export type DefineActions<A extends BaseActions> = Disaptch<A>;
 
 /** StoreModuleを定義 */
 export interface DefineStoreModule<
   N extends string,
-  S extends BaseStoreModule['State'] = never,
-  G extends BaseStoreModule['Getters'] = never,
-  M extends BaseStoreModule['Mutations'] = never,
-  A extends BaseStoreModule['Actions'] = never
+  S extends BaseState = never,
+  G extends BaseGetters = never,
+  M extends BaseMutations = never,
+  A extends BaseActions = never
 > extends Store<DefineState<N, S>> {
   getters: DefineGetters<G>;
   commit: DefineMutations<M>;

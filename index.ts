@@ -1,39 +1,56 @@
 import { Values } from './src/Utils';
 
+// export type Validator<A extends Record<string, any>, P> =
+//     keyof A extends never
+//       ? {}
+//       : keyof A extends Values<P>
+//         ? Values<P> extends keyof A
+//           ? Record<string, string>
+//           : keyof A
+//         : keyof A
+
+// export type Convertor<
+//   A extends Record<string, any>,
+//   P extends Validator<A, P>
+// > = P extends Record<string, string> ? {
+//   [K in keyof P]: A[P[K]];
+// } : never;
+
+// const a = {
+//   'hello': 1,
+//   'world': 2,
+// };
+
+// type A = Convertor<typeof a, {
+//   'aa': 'hello',
+//   'bb': 'world2'
+// }>;
+
+// type B<P extends Record<string, string>> = {};
+// type C = B<never>;
+
+export type PickKeyWithPayload<P> = P extends Record<string, (...args: any) => any>
+  ?
+    Values<{
+      [K in keyof P]: P[K] extends (context: any) => any ? undefined : K
+    }>
+  : never;
+
+/**
+ * ペイロードがないプロパティのキーを取り出す
+ */
+export type PickKeyWithoutPayload<P> = P extends Record<string, (...args: any) => any>
+?
+  Values<{
+    [K in keyof P]: P[K] extends (context: any, payload: any | undefined) => any ? K : undefined;
+  }>
+: never;
+
 const actions = {
-  foo(context: any, payload: string): void {},
-  bar(context: any): void {},
-  baz(context: any, payload: number): void {},
-}
+  hello1: (context, payload?: string) => {},
+  hello2: (context) => {},
+  hello3: (context, payload: string) => {},
+};
 
-type NoUndefinedFeild<T> = { [P in keyof T]: Exclude<T[P], null | undefined> };
-
-export type WeakPayload<F extends (...args: any) => any> = F extends (ctx, payload: infer P) => any
-  ? P
-  : never;
-type PickWPayload<A> = A extends Record<string, (...args: any) => any>
-  ?
-    Values<{
-      [K in keyof A]: A[K] extends (context: any) => any ? undefined : K;
-    }>
-  : never;
-type PickWOPayload<A> = A extends Record<string, (...args: any) => any>
-  ?
-    Values<{
-      [K in keyof A]: A[K] extends (context: any) => any ? K : undefined;
-    }>
-  : never;
-type Define<A> = A extends Record<string, (...args: any) => any>
-  ?
-    {
-      // @ts-ignore
-      <K extends PickWPayload<A>, I extends K>(type: K, payload: WeakPayload<A[K]>): ReturnType<A[K]>;
-      // @ts-ignore
-      <K extends PickWOPayload<A>>(type: K): ReturnType<A[K]>;
-    }
-  : never
-
-type c<P extends PickWOPayload<typeof actions>> = { [K in keyof P]-?: NoUndefinedFeild<P[K]> };
-type a = Define<typeof actions>;
-
-declare var b: a;
+type k1 = PickKeyWithPayload<typeof actions>;
+type k2 = PickKeyWithoutPayload<typeof actions>;

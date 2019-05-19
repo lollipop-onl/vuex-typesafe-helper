@@ -27,7 +27,16 @@ export const getters = {
 // * Mutations
 
 export const mutations = {
-  updateCount(state: IState, count: number) {
+  addCount(state: IState, count = 1) {
+    state.count += count;
+  },
+  updateCount(state: IState, count?: number) {
+    if (count == null) {
+      state.count = 0;
+      
+      return;
+    }
+    
     state.count = count;
   },
   resetCount(state: IState) {
@@ -41,7 +50,7 @@ type Ctx = DefineActionContext<IState, typeof getters, typeof mutations>;
 
 export const actions = {
   async fetchData({ getters, commit }: Ctx, payload: string): Promise<void> {
-    commit('updateCount', getters.xCount(2));
+    commit('updateCount');
   },
   fetchWithData({ commit }: Ctx): void {
     commit('resetCount');
@@ -54,6 +63,7 @@ export type Getters = Convertor<typeof getters, {
   'counter/xCount': 'xCount'
 }>;
 export type Mutations = Convertor<typeof mutations, {
+  'counter/addCount': 'addCount',
   'counter/updateCount': 'updateCount',
   'counter/resetCount': 'resetCount'
 }>;
@@ -62,3 +72,7 @@ export type Actions = Convertor<typeof actions, {
   'counter/fetchWithData': 'fetchWithData'
 }>;
 export type Module = DefineStoreModule<'counter', State, Getters, Mutations, Actions>;
+
+declare var $store: Module;
+
+const a = $store.commit('counter/addCount', 1);
