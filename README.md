@@ -37,7 +37,7 @@ export const state = (): IState => ({
 // Convert to global name
 // It is an error if there is excess or deficiency
 export type Getters = Convertor<typeof getters, {
-  'counter/isOdd', 'isOdd'
+  'counter/isOdd': 'isOdd'
 }>;
 export type getters = {
   isOdd(state: IState) {
@@ -59,7 +59,9 @@ export const mutations = {
 };
 
 export type Ctx = DefineActionContext<IState, typeof getters, typeof mutations>;
-export type Actions = Convertor<typeof actions, {}>;
+export type Actions = Convertor<typeof actions, {
+  'counter/syncCount': 'syncCount'
+}>;
 export const actions = {
   async syncCount(this: Vue, { commit }: Ctx, count: number) {
     const remoteCount = await this.$axios.$post('/sync', { count });
