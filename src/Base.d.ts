@@ -3,7 +3,7 @@
  */
 
 import { CommitOptions, DispatchOptions } from "vuex";
-import { PickKeyWithPayload, PickKeyWithoutPayload } from "./Utils";
+import { PickKeyWithoutPayload } from "./Utils";
 
 /** State */
 export type BaseState = Record<string, any>;
@@ -29,7 +29,7 @@ export type Payload<
 
 /** Commit */
 export type Commit<M extends BaseMutations> = {
-  <K extends PickKeyWithPayload<M>>(
+  <K extends keyof M>(
     type: K,
     payload: Payload<M[K]>,
     options?: CommitOptions
@@ -40,7 +40,7 @@ export type Commit<M extends BaseMutations> = {
     options?: CommitOptions
   ): void;
   // Payload with type
-  <K extends PickKeyWithPayload<M>>(
+  <K extends keyof M>(
     payloadWithType: Payload<M[K]> & { type: K },
     options?: CommitOptions
   ): void;
@@ -52,7 +52,7 @@ export type Commit<M extends BaseMutations> = {
 
 /** Dispatch */
 export type Disaptch<A extends BaseActions> = {
-  <K extends PickKeyWithPayload<A>>(
+  <K extends keyof A>(
     type: K,
     payload: Payload<A[K]>,
     options?: DispatchOptions
@@ -63,7 +63,7 @@ export type Disaptch<A extends BaseActions> = {
     options?: DispatchOptions
   ): ReturnType<A[K]>;
   // Payload with type
-  <K extends PickKeyWithPayload<A>>(
+  <K extends keyof A>(
     payloadWithType: Payload<A[K]> & { type: K },
     options?: DispatchOptions
   ): ReturnType<A[K]>;
