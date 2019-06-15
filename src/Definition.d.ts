@@ -2,7 +2,7 @@
  * @file 各種定義を行う型
  */
 
-import { Store } from 'vuex';
+import { Store } from "vuex";
 import {
   BaseState,
   BaseGetters,
@@ -11,22 +11,23 @@ import {
   BaseStoreModule,
   Commit,
   Disaptch
-} from './Base';
+} from "./Base";
 
 /** State */
-export type DefineState<N extends string, S> = 
-  S extends BaseState
-    ? N extends ''
-      ? S
-      : { [K in N]: S }
-    : never;
+export type DefineState<N extends string, S> = S extends BaseState
+  ? N extends ""
+    ? S
+    : { [K in N]: S }
+  : never;
 
 /** Getters */
 export type DefineGetters<G extends BaseGetters> = {
-  [K in keyof G]: ReturnType<G[K]>;
-}
+  [K in keyof G]: ReturnType<G[K]>
+};
+
 /** Mutations */
 export type DefineMutations<M extends BaseMutations> = Commit<M>;
+
 /** Actions */
 export type DefineActions<A extends BaseActions> = Disaptch<A>;
 

@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": ["esnext", "dom"],
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "noEmit": true,
+    "types": ["@types/node", "@nuxt/vue-app"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.vue"]
+}
