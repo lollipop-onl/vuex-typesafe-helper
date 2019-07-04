@@ -6,32 +6,17 @@ import {
   ActionContext as BaseActionContext,
   CommitOptions,
   DispatchOptions
-} from 'vuex';
+} from "vuex";
 import {
   Payload,
   BaseState,
   BaseGetters,
   BaseMutations,
-  BaseStoreModule
-} from './Base';
-import { PickKeyWithPayload, PickKeyWithoutPayload } from './Utils';
-
-/** ベースのペイロード */
-export type BasePayload = { type: string };
-
-/** Gettersを定義 */
-export type DefineGetters<G extends BaseGetters> = {
-  [K in keyof G]: G[K] extends (...args: any) => infer R ? R : never;
-};
-/** Commit */
-export type DefineCommit<M extends BaseMutations> = {
-  // @ts-ignore
-  <K extends PickKeyWithPayload<M>>(type: K, payload: Payload<M[K]>, options?: CommitOptions): void;
-  <K extends PickKeyWithoutPayload<M>>(type: K, payload?: Payload<M[K]>, options?: CommitOptions): void;
-
-  // フォールバック
-  (type: string, payload: any, options: CommitOptions): void;
-};
+  BaseStoreModule,
+  Commit
+} from "./Base";
+import { DefineGetters } from "./Definition";
+import { PickKeyWithoutPayload } from "./Utils";
 
 /** ActionContext */
 export interface DefineActionContext<
@@ -40,5 +25,5 @@ export interface DefineActionContext<
   M extends BaseMutations = never
 > extends BaseActionContext<S, any> {
   getters: DefineGetters<G>;
-  commit: DefineCommit<M>;
+  commit: Commit<M>;
 }
