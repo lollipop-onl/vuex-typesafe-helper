@@ -6,20 +6,28 @@ import { CommitOptions, DispatchOptions } from "vuex";
 import { PickKeyWithoutPayload } from "./Utils";
 
 /** State */
-export type BaseState = Record<string, any>;
+export interface State {
+  [key: string]: any;
+}
 /** Getters */
-export type BaseGetters = Record<string, (...args: any) => any>;
+export interface Getters {
+  [key: string]: (...args: any) => any;
+}
 /** Mutations */
-export type BaseMutations = Record<string, (...args: any) => void>;
+export interface Mutations {
+  [key: string]: (...args: any) => void;
+}
 /** Actions */
-export type BaseActions = Record<string, (...args: any) => any>;
+export interface Actions {
+  [key: string]: (...args: any) => any;
+}
 /** StoreModule */
-export type BaseStoreModule = {
-  State?: BaseState;
+export interface BaseStoreModule {
+  State?: State;
   Getters?: Record<string, any>;
-  Mutations?: BaseMutations;
-  Actions?: BaseActions;
-};
+  Mutations?: Mutations;
+  Actions?: Actions;
+}
 
 /** Commit, Dispatchでのペイロードを取得 */
 export type Payload<
@@ -28,7 +36,7 @@ export type Payload<
 > = F extends (ctx: any, payload: infer P) => any ? P : Default;
 
 /** Commit */
-export type Commit<M extends BaseMutations> = {
+export type Commit<M extends Mutations> = {
   <K extends keyof M>(
     type: K,
     payload: Payload<M[K]>,
@@ -39,6 +47,7 @@ export type Commit<M extends BaseMutations> = {
     payload?: Payload<M[K]>,
     options?: CommitOptions
   ): void;
+
   // Payload with type
   <K extends keyof M>(
     payloadWithType: Payload<M[K]> & { type: K },
@@ -51,7 +60,7 @@ export type Commit<M extends BaseMutations> = {
 };
 
 /** Dispatch */
-export type Disaptch<A extends BaseActions> = {
+export type Dispatch<A extends Actions> = {
   <K extends keyof A>(
     type: K,
     payload: Payload<A[K]>,
@@ -62,6 +71,7 @@ export type Disaptch<A extends BaseActions> = {
     payload?: Payload<A[K]>,
     options?: DispatchOptions
   ): ReturnType<A[K]>;
+
   // Payload with type
   <K extends keyof A>(
     payloadWithType: Payload<A[K]> & { type: K },

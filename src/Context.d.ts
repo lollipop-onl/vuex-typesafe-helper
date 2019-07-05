@@ -4,26 +4,50 @@
 
 import {
   ActionContext as BaseActionContext,
-  CommitOptions,
-  DispatchOptions
+  CommitOptions
 } from "vuex";
 import {
   Payload,
-  BaseState,
-  BaseGetters,
-  BaseMutations,
-  BaseStoreModule,
-  Commit
-} from "./Base";
-import { DefineGetters } from "./Definition";
-import { PickKeyWithoutPayload } from "./Utils";
+  State,
+  Getters,
+  Mutations
+} from "./base";
+import { DefineGetters } from "./core";
+import { PickKeyWithoutPayload } from "./utils";
+
+/** Commit */
+export type Commit<M extends Mutations> = {
+  <K extends keyof M>(
+    type: K,
+    payload: Payload<M[K]>,
+    options?: CommitOptions
+  ): void;
+  <K extends PickKeyWithoutPayload<M>>(
+    type: K,
+    payload?: Payload<M[K]>,
+    options?: CommitOptions
+  ): void;
+
+  // Payload with type
+  <K extends keyof M>(
+    payloadWithType: Payload<M[K]> & { type: K },
+    options?: CommitOptions
+  ): void;
+
+  // Fallbacks
+  (tyoe: string, payload: any, options: CommitOptions & { root: true }): void;
+  (payloadWithType: Record<any, any> & { type: string }, options: CommitOptions & { root: true }): void;
+};
+
+/** Mutations */
+export type DefineMutations<M extends Mutations> = Commit<M>;
 
 /** ActionContext */
 export interface DefineActionContext<
-  S extends BaseState = never,
-  G extends BaseGetters = never,
-  M extends BaseMutations = never
+  S extends State,
+  G extends Getters,
+  M extends Mutations
 > extends BaseActionContext<S, any> {
   getters: DefineGetters<G>;
-  commit: Commit<M>;
+  commit: DefineMutations<M>;
 }

@@ -1,7 +1,7 @@
 import {
   Convertor,
   DefineStoreModule
-} from '../../';
+} from '../..';
 
 // * State
 
@@ -34,7 +34,7 @@ export const actions = {
 }
 
 export type State = IState;
-export type Getters = Convertor<typeof getters, never>;
+export type Getters = Convertor<typeof getters, {}>;
 export type Mutations = Convertor<typeof mutations, {
   'timer/updateTime': 'updateTime'
 }>;

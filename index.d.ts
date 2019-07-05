@@ -4,6 +4,6 @@ export {
     DefineMutations,
     DefineActions,
     DefineStoreModule
-} from './src/Definition';
-export { DefineActionContext } from './src/Context';
-export { Convertor } from './src/Utils';
+} from './src/core';
+export { DefineActionContext } from './src/context';
+export { Convertor, Omit } from './src/utils';

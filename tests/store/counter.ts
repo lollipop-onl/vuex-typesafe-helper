@@ -1,4 +1,4 @@
-import { Convertor, DefineActionContext, DefineStoreModule } from "../../";
+import { Convertor, DefineActionContext, DefineStoreModule } from "../..";
 
 // * State
 

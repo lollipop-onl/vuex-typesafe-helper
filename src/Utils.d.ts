@@ -3,7 +3,7 @@
  */
 
 /** オブジェクトの値を取り出す */
-export type Values<T> = T extends { [key: string]: infer V } ? V : never;
+export type Values<T, Default = never> = T extends { [key: string]: infer V } ? V : Default;
 
 /**
  * Converorの引数をバリデーションする
@@ -43,3 +43,8 @@ export type PickKeyWithoutPayload<P> = P extends Record<
  * Omit
  */
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+
+/**
+ * Nil
+ */
+export type Nil<T> = T | undefined | null;

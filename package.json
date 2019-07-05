@@ -22,9 +22,12 @@
   ],
   "dependencies": {
     "typescript": "^3.4.5",
+    "vue": "^2.6.10",
     "vuex": "^3.1.1"
   },
   "devDependencies": {
-    "conditional-type-checks": "^1.0.1"
+    "@nuxt/vue-app": "^2.8.1",
+    "conditional-type-checks": "^1.0.1",
+    "vue-property-decorator": "^8.2.1"
   }
 }
