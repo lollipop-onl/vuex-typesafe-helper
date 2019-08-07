@@ -3,7 +3,7 @@
  */
 
 import { CommitOptions, DispatchOptions } from "vuex";
-import { PickKeyWithoutPayload } from "./Utils";
+import { PickKeyWithoutPayload } from "./utils";
 
 /** State */
 export interface State {
