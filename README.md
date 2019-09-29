@@ -34,21 +34,17 @@ export const state = (): IState => ({
   count: 0
 });
 
-// Convert to global name
-// It is an error if there is excess or deficiency
-export type Getters = Convertor<typeof getters, {
-  'counter/isOdd': 'isOdd'
-}>;
 export type getters = {
   isOdd(state: IState) {
     return count % 2;
   }
 };
-
-export type Mutations = Convertor<typeof mutations, {
-  'counter/updateCount': 'updateCount',
-  'counter/resetCount': 'resetCount'
+// Convert to global name
+// It is an error if there is excess or deficiency
+export type Getters = Convertor<typeof getters, {
+  'counter/isOdd': 'isOdd'
 }>;
+
 export const mutations = {
   updateCount(state: IState, count: number) {
     state.count = count;
@@ -57,11 +53,12 @@ export const mutations = {
     state.count = 0;
   }
 };
+export type Mutations = Convertor<typeof mutations, {
+  'counter/updateCount': 'updateCount',
+  'counter/resetCount': 'resetCount'
+}>;
 
 export type Ctx = DefineActionContext<IState, typeof getters, typeof mutations>;
-export type Actions = Convertor<typeof actions, {
-  'counter/syncCount': 'syncCount'
-}>;
 export const actions = {
   async syncCount(this: Vue, { commit }: Ctx, count: number) {
     const remoteCount = await this.$axios.$post('/sync', { count });
@@ -69,6 +66,9 @@ export const actions = {
     commit('updateCount', remoteCount);
   }
 };
+export type Actions = Convertor<typeof actions, {
+  'counter/syncCount': 'syncCount'
+}>;
 
 // Define store module type
 export type Store = DefineStoreModule<'counter', IState, Getters, Mutations, Actions>;
@@ -120,7 +120,9 @@ export class MyComponent extends Vue {
 }
 ```
 
-### Step X. In root module
+## Other examples
+
+### In root module
 
 ```ts
 // store/index.ts
@@ -167,6 +169,58 @@ export const actions = {
 // No couversion required
 export type Store = DefineStoreModule<'', IState, typeof getters, typeof mutations, Omit<typeof actions, 'nuxtServerInit'>>;
 
+```
+
+### Nested store module
+
+```ts
+// store/sample/counter.ts
+
+import Vue from 'vue';
+import {
+  Convertor,
+  DefineActionContext,
+  DefineStoreModule
+} from '@lollipop-onl/vuex-typesafe-helper';
+
+// Only define interface of state
+export interface IState {
+  count: number;
+}
+export const state = (): IState => ({
+  count: 0
+});
+
+export type getters = {
+  isOdd(state: IState) { ... }
+};
+export type Getters = Convertor<typeof getters, {
+  'sample/counter/isOdd': 'isOdd'
+}>;
+
+export const mutations = {
+  updateCount(state: IState, count: number) { ... }
+};
+export type Mutations = Convertor<typeof mutations, {
+  'sample/counter/updateCount': 'updateCount'
+}>;
+
+export type Ctx = DefineActionContext<IState, typeof getters, typeof mutations>;
+export const actions = {
+  async syncCount(this: Vue, { commit }: Ctx, count: number) { ... }
+};
+export type Actions = Convertor<typeof actions, {
+  'sample/counter/syncCount': 'syncCount'
+}>;
+
+// Define store module type
+export type Store = DefineStoreModule<
+  ['sample', 'counter'],
+  IState,
+  Getters,
+  Mutations,
+  Actions
+>;
 ```
 
 ## License
