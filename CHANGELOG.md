@@ -71,10 +71,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 > [Changes since previous version](https://gitlab.com/lollipop.onl/vuex-typesafe-helper/compare/v0.1.1...v0.1.2)
 
+## Changed
+
+* `DefineGetters` type and `DefineCommit` type removed type specification of argument
+
 # [0.1.1] - 2018-05-17
 
 > [Changes since previous version](https://gitlab.com/lollipop.onl/vuex-typesafe-helper/compare/v0.1.0...v0.1.1)
 
+* First version ! 🎉
+
 # [0.1.0] - 2018-05-17
 
 > [Changes since previous version](https://gitlab.com/lollipop.onl/vuex-typesafe-helper/commits/v0.1.0)
+
+* Preview version 🤡

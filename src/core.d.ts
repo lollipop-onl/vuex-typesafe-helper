@@ -12,15 +12,18 @@ import {
   Commit,
   Dispatch
 } from './base';
+import { ToNestedObject } from './utils';
 
 /** State */
-export type DefineState<N extends string, S> =
-  S extends State
-    ? N extends ''
-      // ルートモジュール
-      ? S
-      : { [K in N]: S }
-    : never;
+export type DefineState<N extends string | string[], S extends State> =
+  N extends ''
+    // ルートモジュール
+    ? S
+    : N extends string
+        ? { [K in N]: S }
+        : N extends string[]
+            ? ToNestedObject<S, N>
+            : S;
 
 /** Getters */
 export type DefineGetters<G extends Getters> = {
@@ -34,7 +37,7 @@ export type DefineMutations<M extends Mutations> = Commit<M>;
 export type DefineActions<A extends Actions> = Dispatch<A>;
 
 export interface DefineStoreModule<
-  NS extends string,
+  NS extends string | string[],
   S extends State,
   G extends Getters,
   M extends Mutations,

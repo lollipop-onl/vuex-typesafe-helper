@@ -61,24 +61,24 @@ export type Commit<M extends Mutations> = {
 
 /** Dispatch */
 export type Dispatch<A extends Actions> = {
-  <K extends keyof A>(
-    type: K,
-    payload: Payload<A[K]>,
-    options?: DispatchOptions
-  ): ReturnType<A[K]>;
-  <K extends PickKeyWithoutPayload<A>>(
-    type: K,
-    payload?: Payload<A[K]>,
-    options?: DispatchOptions
-  ): ReturnType<A[K]>;
-
   // Payload with type
-  <K extends keyof A>(
-    payloadWithType: Payload<A[K]> & { type: K },
-    options?: DispatchOptions
-  ): ReturnType<A[K]>;
   <K extends PickKeyWithoutPayload<A>>(
     payloadWithType: { type: K },
     options?: DispatchOptions
   ): ReturnType<A[K]>;
+  <K extends keyof A>(
+    payloadWithType: Payload<A[K]> & { type: K },
+    options?: DispatchOptions
+  ): ReturnType<A[K]>;
+
+  <K extends PickKeyWithoutPayload<A>>(
+    type: K,
+    payload?: Payload<A[K]>,
+    options?: DispatchOptions
+    ): ReturnType<A[K]>;
+    <K extends keyof A>(
+      type: K,
+      payload: Payload<A[K]>,
+      options?: DispatchOptions
+    ): ReturnType<A[K]>;
 };

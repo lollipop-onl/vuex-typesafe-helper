@@ -17,9 +17,7 @@ export const state = (): IState => ({
 
 export const getters = {}
 
-
 // * Mutations
-
 export const mutations = {
   updateLoadingStatus(state: IState, status: boolean) {
     state.loading = status;

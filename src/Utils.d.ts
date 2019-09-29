@@ -48,3 +48,25 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
  * Nil
  */
 export type Nil<T> = T | undefined | null;
+
+/**
+ *
+ */
+export type ToObjectFromKeys<
+  V,
+  K1 extends string | undefined = undefined,
+  K2 extends string | undefined = undefined,
+  K3 extends string | undefined = undefined,
+  K4 extends string | undefined = undefined,
+  K5 extends string | undefined = undefined,
+> =
+  K1 extends undefined
+    ? V
+    : K1 extends string
+        ? { [K in K1]: ToObjectFromKeys<V, K2, K3, K4, K5> }
+        : V;
+
+/**
+ *
+ */
+export type ToNestedObject<V, Ks extends string[]> = ToObjectFromKeys<V, Ks[0], Ks[1], Ks[2], Ks[3], Ks[4]>
