@@ -8,7 +8,6 @@ import {
   Getters,
   Mutations,
   Actions,
-  BaseStoreModule,
   Commit,
   Dispatch
 } from './base';
@@ -26,9 +25,9 @@ export type DefineState<N extends string | string[], S extends State> =
             : S;
 
 /** Getters */
-export type DefineGetters<G extends Getters> = {
-  [K in keyof G]: ReturnType<G[K]>;
-};
+export type DefineGetters<G extends Getters> = G extends never
+  ? {}
+  : { [K in keyof G]: ReturnType<G[K]> };
 
 /** Mutations */
 export type DefineMutations<M extends Mutations> = Commit<M>;
