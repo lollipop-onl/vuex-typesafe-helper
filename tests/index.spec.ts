@@ -3,8 +3,9 @@ import { Store as IndexStore } from "./store/";
 import { Store as CounterStore } from "./store/counter";
 import { Store as TimerStore } from "./store/timer";
 import { Store as SampleCounterStore } from "./store/sample/counter";
+import { Store as NeverStore } from "./store/never";
 
-export type RootStore = IndexStore & CounterStore & TimerStore & SampleCounterStore;
+export type RootStore = IndexStore & CounterStore & TimerStore & SampleCounterStore & NeverStore;
 
 declare const $store: RootStore;
 

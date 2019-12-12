@@ -11,7 +11,7 @@ import {
   Commit,
   Dispatch
 } from './base';
-import { ToNestedObject } from './utils';
+import { ToNestedObject, Neverable } from './utils';
 
 /** State */
 export type DefineState<N extends string | string[], S extends State> =
@@ -25,9 +25,7 @@ export type DefineState<N extends string | string[], S extends State> =
             : S;
 
 /** Getters */
-export type DefineGetters<G extends Getters> = G extends never
-  ? {}
-  : { [K in keyof G]: ReturnType<G[K]> };
+export type DefineGetters<G extends Getters> = Neverable<{ [K in keyof G]: ReturnType<G[K]> }>;
 
 /** Mutations */
 export type DefineMutations<M extends Mutations> = Commit<M>;

@@ -67,6 +67,18 @@ export type ToObjectFromKeys<
         : V;
 
 /**
- *
+ * ネストされたオブジェクトに変換する
  */
 export type ToNestedObject<V, Ks extends string[]> = ToObjectFromKeys<V, Ks[0], Ks[1], Ks[2], Ks[3], Ks[4]>
+
+/**
+ * ２つの型が等しいかを判定する
+ */
+export type IsEquals<X, Y> =
+  (<T>() => T extends X ? 1 : 2) extends
+    (<T>() => T extends Y ? 1 : 2) ? true : false;
+
+/**
+ * Neverの場合にデフォルトの型を返す
+ */
+export type Neverable<T, D = {}> = IsEquals<T, never> extends true ? D : T;
