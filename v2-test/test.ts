@@ -1,4 +1,4 @@
-import { MethodNameMapper } from '../lib/utils';
+import {MethodNameMapper, ValuesOf} from '../lib/utils';
 
 type Obj = {
   'foo': 'module/foo',
@@ -16,3 +16,20 @@ type InvertResult<T extends Record<PropertyKey, PropertyKey>> = {
 }
 
 type a = AllValues<Obj>
+
+export type PickKeyWithoutPayload<P> = P extends Record<
+    string,
+    (...args: any) => any
+    >
+  ? ValuesOf<
+    { [K in keyof P]: P[K] extends (context: any, payload: NonNullable<any>) => any ? K : undefined }
+    >
+  : never;
+
+type a2 = {
+  foo(state: any, foo: string): void;
+  bar(state: any, foo?: string): void;
+  baz(state: any): void;
+}
+
+type c = PickKeyWithoutPayload<a2>;

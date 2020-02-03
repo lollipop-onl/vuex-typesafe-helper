@@ -57,23 +57,23 @@ export type State = IState;
 export type Getters = Converter<
   typeof getters,
   {
-    "x2Count": "sample/counter/x2Count";
-    "xCount": "sample/counter/xCount";
+    "x2Count": "counter/x2Count";
+    "xCount": "counter/xCount";
   }
   >;
 export type Mutations = Converter<
   typeof mutations,
   {
-    "addCount": "sample/counter/addCount";
-    "updateCount": "sample/counter/updateCount";
-    "resetCount": "sample/counter/resetCount";
+    "addCount": "counter/addCount";
+    "updateCount": "counter/updateCount";
+    "resetCount": "counter/resetCount";
   }
   >;
 export type Actions = Converter<
   typeof actions,
   {
-    "fetchData": "sample/counter/fetchData";
-    "fetchWithData": "sample/counter/fetchWithData";
+    "fetchData": "counter/fetchData";
+    "fetchWithData": "counter/fetchWithData";
   }
   >;
 export type Store = DefineStoreModule<

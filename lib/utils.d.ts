@@ -13,7 +13,17 @@ export type IsEquals<X, Y> =
 /** Neverの場合にデフォルトの型を返す */
 export type Neverable<T, D> = IsEquals<T, never> extends true ? D : T;
 
-/** ペイロードがないプロパティのキーを取り出す */
+/** ペイロードが必ず存在するプロパティのキーを取り出す */
+export type PickKeyWithPayload<P> = P extends Record<
+    string,
+    (...args: any) => any
+  >
+  ? ValuesOf<
+    { [K in keyof P]: P[K] extends (context: any, payload: NonNullable<any>) => any ? K : undefined }
+    >
+  : never;
+
+/** ペイロードがない可能性があるプロパティのキーを取り出す */
 export type PickKeyWithoutPayload<P> = P extends Record<
     string,
     (...args: any) => any

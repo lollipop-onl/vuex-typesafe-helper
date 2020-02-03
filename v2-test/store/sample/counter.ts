@@ -50,7 +50,8 @@ export const actions = {
       secret?: string
     }
   ): Promise<void> {
-    commit("addCount", '100');
+    commit("addCount", false);
+    commit("updateCount", '');
   },
   fetchWithData({ commit }: Ctx): void {
     commit("resetCount");

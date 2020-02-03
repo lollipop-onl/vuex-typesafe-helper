@@ -2,8 +2,8 @@
  * @file 各種定義系型定義
  */
 
-import {Actions, Getters, Mutations, State} from './base';
-import { CommitMapper } from './core';
+import { Actions, Getters, Mutations, State } from './base';
+import { CommitMapper, DispatchMapper } from './core';
 import { Neverable, ToNestedObject } from './utils';
 
 /** モジュールのState型を定義 */
@@ -24,4 +24,4 @@ export type DefineGetters<G extends Getters> = Neverable<{ [K in keyof G]: Retur
 export type DefineMutations<M extends Mutations> = CommitMapper<M>;
 
 /** モジュールのActions型を定義 */
-export type DefineActions<A extends Actions> = Function;
+export type DefineActions<A extends Actions> = DispatchMapper<A>;

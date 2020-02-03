@@ -21,3 +21,11 @@ export interface Mutations {
 export interface Actions {
   [key: string]: (...args: any) => any;
 }
+
+/** StoreModule */
+export interface StoreModule {
+  state: State;
+  getters: Getters;
+  mutations: Mutations;
+  actions: Actions;
+}

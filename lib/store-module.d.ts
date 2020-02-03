@@ -2,7 +2,7 @@
  * @file ストアモジュールで使用する型
  */
 
-import { ActionContext } from 'vuex';
+import { ActionContext, Commit } from 'vuex';
 import { Actions, Getters, Mutations, State } from "./base";
 import { DefineState, DefineGetters, DefineMutations } from './definition';
 import { ToPair } from './utils';
