@@ -18,7 +18,7 @@ export type DefineState<NS extends string | string[], S extends State> =
       : S;
 
 /** モジュールのGetters型を定義 */
-export type DefineGetters<G extends Getters> = Neverable<{ [K in keyof G]: ReturnType<G[K]> }, {}>;
+export type DefineGetters<G extends Getters> = { [K in keyof G]: ReturnType<G[K]> };
 
 /** モジュールのMutations型を定義 */
 export type DefineMutations<M extends Mutations> = CommitMapper<M>;

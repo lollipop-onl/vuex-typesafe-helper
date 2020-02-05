@@ -5,12 +5,12 @@
 import { ActionContext, Commit } from 'vuex';
 import { Actions, Getters, Mutations, State } from "./base";
 import { DefineState, DefineGetters, DefineMutations } from './definition';
-import { ToPair } from './utils';
+import { Neverable, ToPair } from './utils';
 
 /** モジュールのメソッド名とグローバルのタイプ名を変換する */
 export type Converter<
   T extends Record<string, any>,
-  P extends Record<keyof T, string>,
+  P extends { [K in keyof T]: string },
 > = {
   [K in ToPair<P>[1]]: T[Extract<ToPair<P>, [string, K]>[0]];
 }
@@ -35,7 +35,7 @@ export interface DefineStoreModule<
   A extends Actions | never,
 > {
   state: DefineState<NS, S>,
-  getters: G,
-  mutations: M,
-  actions: A,
+  getters: Neverable<G, {}>,
+  mutations: Neverable<M, {}>,
+  actions: Neverable<A, {}>,
 }

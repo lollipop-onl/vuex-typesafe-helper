@@ -1,7 +1,6 @@
-import { Converter, DefineStoreModule } from "../../lib";
+import { Converter, DefineActionContext, DefineStoreModule } from '../..';
 
-// * State
-
+/** State */
 export interface IState {
   count: number;
 }
@@ -10,28 +9,30 @@ export const state = (): IState => ({
   count: 0
 });
 
-// * Getters
-
+/** Getters */
 export const getters = {
-  x2Count(state: IState) {
+  doubleCount(state: IState) {
     return state.count * 2;
   },
-  xCount: (state: IState) => (times: number) => state.count * times
+  isValidCount(state: IState) {
+    return state.count >= 0;
+  }
 };
 
-// * Mutations
+export type Getters = Converter<
+  typeof getters,
+  {
+    doubleCount: 'counter/doubleCount',
+    isValidCount: 'counter/isValidCount',
+  }
+>;
 
+/** Mutations */
 export const mutations = {
-  addCount(state: IState, count: number) {
+  addCount(state: IState, count = 1) {
     state.count += count;
   },
-  updateCount(state: IState, count?: number) {
-    if (count == null) {
-      state.count = 0;
-
-      return;
-    }
-
+  setCount(state: IState, count: number) {
     state.count = count;
   },
   resetCount(state: IState) {
@@ -39,47 +40,38 @@ export const mutations = {
   }
 };
 
-// * Actions
-
-export const actions = {
-  async fetchData(
-    { state, getters, commit }: any,
-    payload: string
-  ): Promise<void> {
-    commit("addCount", 100);
-  },
-  fetchWithData({ commit }: any): void {
-    commit("resetCount");
-  }
-};
-
-export type State = IState;
-export type Getters = Converter<
-  typeof getters,
-  {
-    "x2Count": "counter/x2Count";
-    "xCount": "counter/xCount";
-  }
-  >;
 export type Mutations = Converter<
   typeof mutations,
   {
-    "addCount": "counter/addCount";
-    "updateCount": "counter/updateCount";
-    "resetCount": "counter/resetCount";
+    addCount: 'counter/addCount',
+    setCount: 'counter/setCount',
+    resetCount: 'counter/resetCount'
   }
-  >;
+>;
+
+/** Actions */
+type Ctx = DefineActionContext<IState, typeof getters, typeof mutations>;
+
+export const actions = {
+  incrementCount({commit }: Ctx): void {
+    commit('addCount', 1);
+  },
+  async saveCount({ state, getters, commit }: Ctx, value = 0): Promise<void> {
+    const { count } = state;
+    const { doubleCount } = getters;
+
+    await Promise.resolve();
+
+    console.log((count + doubleCount + value));
+  }
+};
+
 export type Actions = Converter<
   typeof actions,
   {
-    "fetchData": "counter/fetchData";
-    "fetchWithData": "counter/fetchWithData";
+    incrementCount: 'counter/incrementCount',
+    saveCount: 'counter/saveCount'
   }
-  >;
-export type Store = DefineStoreModule<
-  "counter",
-  State,
-  Getters,
-  Mutations,
-  Actions
-  >;
+>;
+
+export type Store = DefineStoreModule<'counter', IState, Getters, Mutations, Actions>;
