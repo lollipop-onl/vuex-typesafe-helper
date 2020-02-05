@@ -2,7 +2,7 @@
   "name": "@lollipop-onl/vuex-typesafe-helper",
   "version": "0.2.13",
   "description": "Vuex minimaly typesafe system",
-  "main": "index.d.ts",
+  "main": "lib/index.d.ts",
   "scripts": {},
   "author": "lollipop.onl",
   "license": "MIT",
@@ -18,7 +18,7 @@
     "url": "https://gitlab.com/lollipop.onl/vuex-typesafe-helper/issues"
   },
   "files": [
-    "src/**/*"
+    "lib/**/*"
   ],
   "dependencies": {
     "typescript": "^3.4.5",

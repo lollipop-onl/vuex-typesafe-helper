@@ -1,35 +1,36 @@
-import {
-  DefineActionContext,
-  DefineStoreModule
-} from '../../';
+import { DefineActionContext, DefineStoreModule } from '../..';
 
-// * State
-
+/** State */
 export interface IState {
   loading: boolean;
 }
 
 export const state = (): IState => ({
-  loading: false
+  loading: false,
 });
 
-// * Getters
+/** Getters */
+export const getters = {};
 
-export const getters = {}
-
-// * Mutations
+/** mutations */
 export const mutations = {
-  updateLoadingStatus(state: IState, status: boolean) {
+  setLoadingStatus(state: IState, status: boolean) {
     state.loading = status;
   }
-}
+};
 
-// * Actions
-
+/** Actions */
 type Ctx = DefineActionContext<IState, typeof getters, typeof mutations>;
 
 export const actions = {
+  nuxtServerInit(): void {},
   async initialize({}: Ctx, token: string): Promise<void> {}
-}
+};
 
-export type Store = DefineStoreModule<'', IState, typeof getters, typeof mutations, typeof actions>;
+export type Store = DefineStoreModule<
+  '',
+  IState,
+  typeof getters,
+  typeof mutations,
+  Omit<typeof actions, 'nuxtServerInit'>
+>;
