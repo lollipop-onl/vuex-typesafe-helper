@@ -9,7 +9,7 @@
     "strict": true,
     "noImplicitAny": true,
     "noEmit": true,
-    "types": ["@types/node", "@nuxt/vue-app"]
+    "types": ["@types/node", "@nuxt/types"]
   },
-  "include": ["src/**/*.ts", "src/**/*.vue"]
+  "includes": ["lib/**/*.ts"]
 }

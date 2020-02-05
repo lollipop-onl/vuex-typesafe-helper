@@ -3,9 +3,8 @@
  */
 
 import {CommitOptions, DispatchOptions} from "vuex";
-import { Mutations } from "./base";
-import { PickKeyWithoutPayload ￿} from './utils';
-import {Actions, Payload} from "../src/base";
+import { Mutations, Actions } from "./base";
+import { PickKeyWithoutPayload } from './utils';
 
 /** 関数からペイロード引数を取り出す */
 export type PickPayload<
