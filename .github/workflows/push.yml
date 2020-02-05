@@ -20,16 +20,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Check ESLint
-        run: yarn lintjs:fix
-      - name: was auto-fix happen in check
-        run:
+        run: yarn lint
       - name: Run TypeScript test
         run: yarn test
-      - name: Push auth-fixed ESLint errors
-        run: |
-          git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
-          git config --global user.name "${{ github.event.pusher.name }"
-          git config --global user.email "${{ github.event.pusher.email }}"
 
   release:
     name: Release to npm
@@ -37,3 +30,4 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
+      - run: echo "run release process..."
