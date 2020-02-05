@@ -1,7 +1,6 @@
-import { Convertor, DefineActionContext, DefineStoreModule } from "../..";
+import { Converter, DefineActionContext, DefineStoreModule } from '../..';
 
-// * State
-
+/** State */
 export interface IState {
   count: number;
 }
@@ -10,78 +9,69 @@ export const state = (): IState => ({
   count: 0
 });
 
-// * Getters
-
+/** Getters */
 export const getters = {
-  x2Count(state: IState) {
+  doubleCount(state: IState): number {
     return state.count * 2;
   },
-  xCount: (state: IState) => (times: number) => state.count * times
+  isValidCount(state: IState): boolean {
+    return state.count >= 0;
+  }
 };
 
-// * Mutations
+export type Getters = Converter<
+  typeof getters,
+  {
+    doubleCount: 'counter/doubleCount';
+    isValidCount: 'counter/isValidCount';
+  }
+>;
 
+/** Mutations */
 export const mutations = {
-  addCount(state: IState, count: number) {
+  addCount(state: IState, count = 1): void {
     state.count += count;
   },
-  updateCount(state: IState, count?: number) {
-    if (count == null) {
-      state.count = 0;
-
-      return;
-    }
-
+  setCount(state: IState, count: number): void {
     state.count = count;
   },
-  resetCount(state: IState) {
+  resetCount(state: IState): void {
     state.count = 0;
   }
 };
 
-// * Actions
+export type Mutations = Converter<
+  typeof mutations,
+  {
+    addCount: 'counter/addCount';
+    setCount: 'counter/setCount';
+    resetCount: 'counter/resetCount';
+  }
+>;
 
+/** Actions */
 type Ctx = DefineActionContext<IState, typeof getters, typeof mutations>;
 
 export const actions = {
-  async fetchData(
-    { state, getters, commit }: Ctx,
-    payload: string
-  ): Promise<void> {
-    commit("addCount", 100);
+  incrementCount({commit }: Ctx): void {
+    commit('addCount', 1);
   },
-  fetchWithData({ commit }: Ctx): void {
-    commit("resetCount");
+  async saveCount({ state, getters, commit }: Ctx, value = 0): Promise<void> {
+    const { count } = state;
+    const { doubleCount } = getters;
+
+    await Promise.resolve();
+
+    console.log((count + doubleCount + value));
   }
 };
 
-export type State = IState;
-export type Getters = Convertor<
-  typeof getters,
-  {
-    "counter/x2Count": "x2Count";
-    "counter/xCount": "xCount";
-  }
->;
-export type Mutations = Convertor<
-  typeof mutations,
-  {
-    "counter/addCount": "addCount";
-    "counter/updateCount": "updateCount";
-    "counter/resetCount": "resetCount";
-  }
->;
-export type Actions = Convertor<
+export type Actions = Converter<
   typeof actions,
   {
-    "counter/fetchData": "fetchData";
-    "counter/fetchWithData": "fetchWithData";
+    incrementCount: 'counter/incrementCount';
+    saveCount: 'counter/saveCount';
   }
 >;
-export type Store = DefineStoreModule<
-  "counter",
-  State,
-  Getters,
-  Mutations,
-  Actions
->;
+
+export type Store = DefineStoreModule<'counter', IState, Getters, Mutations, Actions>;

@@ -1,0 +1,35 @@
+name: on push task
+on: push
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Yarnキャッシュディレクトリパス取得
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Run yarn install
+        run: yarn install
+      - name: Check ESLint
+        run: yarn lint
+      - name: Run TypeScript test
+        run: yarn test
+
+  release:
+    name: Release to npm
+    if: github.ref == 'refs/head/master'
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "run release process..."

@@ -6,7 +6,7 @@ Inspired by [takefumi-yoshii/ts-nuxtjs-express](https://github.com/takefumi-yosh
 
 ## Installation
 
-```sh
+```shell script
 $ npm i --save @lollipop-onl/vuex-typesafe-helper
 # or
 $ yarn add @lollipop-onl/vuex-typesafe-helper
@@ -16,12 +16,12 @@ $ yarn add @lollipop-onl/vuex-typesafe-helper
 
 ### Step 1. Define Vuex store
 
-```ts
+```typescript
 // store/counter.ts
 
 import Vue from 'vue';
 import {
-  Convertor,
+  Converter,
   DefineActionContext,
   DefineStoreModule
 } from '@lollipop-onl/vuex-typesafe-helper';
@@ -41,8 +41,8 @@ export type getters = {
 };
 // Convert to global name
 // It is an error if there is excess or deficiency
-export type Getters = Convertor<typeof getters, {
-  'counter/isOdd': 'isOdd'
+export type Getters = Converter<typeof getters, {
+  isOdd: 'counter/isOdd'
 }>;
 
 export const mutations = {
@@ -53,9 +53,9 @@ export const mutations = {
     state.count = 0;
   }
 };
-export type Mutations = Convertor<typeof mutations, {
-  'counter/updateCount': 'updateCount',
-  'counter/resetCount': 'resetCount'
+export type Mutations = Converter<typeof mutations, {
+  updateCount: 'counter/updateCount',
+  resetCount: 'counter/resetCount'
 }>;
 
 export type Ctx = DefineActionContext<IState, typeof getters, typeof mutations>;
@@ -66,8 +66,8 @@ export const actions = {
     commit('updateCount', remoteCount);
   }
 };
-export type Actions = Convertor<typeof actions, {
-  'counter/syncCount': 'syncCount'
+export type Actions = Converter<typeof actions, {
+  syncCount: 'counter/syncCount'
 }>;
 
 // Define store module type
@@ -76,18 +76,20 @@ export type Store = DefineStoreModule<'counter', IState, Getters, Mutations, Act
 
 ### Step 2. Combine all store modules
 
-```ts
+```typescript
 // types/vuex.d.ts
+
+import { DefineRootStore } from '@lollipop-onl/vuex-typesafe-helper';
 
 import { Store as CounterStore } from '@/store/counter';
 import { Store as AuthStore } from '@/store/auth';
 
-export type RootStore = CounterStore & AuthStore;
+export type RootStore = DefineRootStore<CounterStore & AuthStore>;
 ```
 
 ### Step 3. Self attachment RootStore type to global `$store`
 
-```ts
+```typescript
 import { Component, Vue } from 'nuxt-property-decorator';
 import { RootStore } from '@/types/vuex';
 
@@ -124,7 +126,7 @@ export class MyComponent extends Vue {
 
 ### In root module
 
-```ts
+```typescript
 // store/index.ts
 
 import { Context } from '@nuxt/vue-app';
@@ -173,12 +175,12 @@ export type Store = DefineStoreModule<'', IState, typeof getters, typeof mutatio
 
 ### Nested store module
 
-```ts
+```typescript
 // store/sample/counter.ts
 
 import Vue from 'vue';
 import {
-  Convertor,
+  Converter,
   DefineActionContext,
   DefineStoreModule
 } from '@lollipop-onl/vuex-typesafe-helper';
@@ -194,23 +196,23 @@ export const state = (): IState => ({
 export type getters = {
   isOdd(state: IState) { ... }
 };
-export type Getters = Convertor<typeof getters, {
-  'sample/counter/isOdd': 'isOdd'
+export type Getters = Converter<typeof getters, {
+  isOdd: 'sample/counter/isOdd'
 }>;
 
 export const mutations = {
   updateCount(state: IState, count: number) { ... }
 };
-export type Mutations = Convertor<typeof mutations, {
-  'sample/counter/updateCount': 'updateCount'
+export type Mutations = Converter<typeof mutations, {
+  updateCount: 'sample/counter/updateCount'
 }>;
 
 export type Ctx = DefineActionContext<IState, typeof getters, typeof mutations>;
 export const actions = {
   async syncCount(this: Vue, { commit }: Ctx, count: number) { ... }
 };
-export type Actions = Convertor<typeof actions, {
-  'sample/counter/syncCount': 'syncCount'
+export type Actions = Converter<typeof actions, {
+  syncCount: 'sample/counter/syncCount'
 }>;
 
 // Define store module type
@@ -222,6 +224,10 @@ export type Store = DefineStoreModule<
   Actions
 >;
 ```
+
+## Migrate v0 to v1
+
+TODO.
 
 ## License
 
