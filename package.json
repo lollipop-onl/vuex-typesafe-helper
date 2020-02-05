@@ -4,7 +4,8 @@
   "description": "Vuex minimaly typesafe system",
   "main": "lib/index.d.ts",
   "scripts": {
-    "test": "tsc"
+    "test": "tsc",
+    "lint": "eslint --ext .ts ."
   },
   "author": "lollipop.onl",
   "license": "MIT",
@@ -31,7 +32,10 @@
     "@nuxt/types": "^0.6.1",
     "@nuxt/typescript-build": "^0.5.6",
     "@types/node": "^13.7.0",
+    "@typescript-eslint/eslint-plugin": "^2.19.0",
+    "@typescript-eslint/parser": "^2.19.0",
     "conditional-type-checks": "^1.0.5",
+    "eslint": "^6.8.0",
     "nuxt": "^2.11.0",
     "vue-property-decorator": "^8.4.0"
   }
