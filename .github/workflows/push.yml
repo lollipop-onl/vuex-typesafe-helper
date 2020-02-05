@@ -19,6 +19,8 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
+      - name: Run yarn install
+        run: yarn install
       - name: Check ESLint
         run: yarn lint
       - name: Run TypeScript test
