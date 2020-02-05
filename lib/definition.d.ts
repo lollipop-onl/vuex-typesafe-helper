@@ -4,7 +4,7 @@
 
 import { Actions, Getters, Mutations, State } from './base';
 import { CommitMapper, DispatchMapper } from './core';
-import { Neverable, ToNestedObject } from './utils';
+import { ToNestedObject } from './utils';
 
 /** モジュールのState型を定義 */
 export type DefineState<NS extends string | string[], S extends State> =

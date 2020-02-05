@@ -23,7 +23,7 @@ export const getters = {
 export type Getters = Converter<
   typeof getters,
   {
-    fullName: 'mypage/account/fullName'
+    fullName: 'mypage/account/fullName';
   }
 >;
 
@@ -37,7 +37,7 @@ export const mutations = {
 export type Mutations = Converter<
   typeof mutations,
   {
-    setAccountProfile: 'mypage/account/setAccountProfile'
+    setAccountProfile: 'mypage/account/setAccountProfile';
   }
 >;
 
@@ -58,7 +58,7 @@ export const actions = {
   async deleteAccount({}: Ctx, accountId?: string): Promise<void> {
     await Promise.resolve();
   },
-  async updateAccount({}: Ctx, payload: { firstName: string, lastName: string }): Promise<void> {
+  async updateAccount({}: Ctx, payload: { firstName: string; lastName: string }): Promise<void> {
     await Promise.resolve();
   }
 };
@@ -66,10 +66,10 @@ export const actions = {
 export type Actions = Converter<
   typeof actions,
   {
-    fetchMyAccount: 'mypage/account/fetchMyAccount',
-    fetchUserAccount: 'mypage/account/fetchUserAccount',
-    deleteAccount: 'mypage/account/deleteAccount',
-    updateAccount: 'mypage/account/updateAccount'
+    fetchMyAccount: 'mypage/account/fetchMyAccount';
+    fetchUserAccount: 'mypage/account/fetchUserAccount';
+    deleteAccount: 'mypage/account/deleteAccount';
+    updateAccount: 'mypage/account/updateAccount';
   }
 >;
 

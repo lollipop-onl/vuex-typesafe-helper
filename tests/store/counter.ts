@@ -11,10 +11,10 @@ export const state = (): IState => ({
 
 /** Getters */
 export const getters = {
-  doubleCount(state: IState) {
+  doubleCount(state: IState): number {
     return state.count * 2;
   },
-  isValidCount(state: IState) {
+  isValidCount(state: IState): boolean {
     return state.count >= 0;
   }
 };
@@ -22,20 +22,20 @@ export const getters = {
 export type Getters = Converter<
   typeof getters,
   {
-    doubleCount: 'counter/doubleCount',
-    isValidCount: 'counter/isValidCount',
+    doubleCount: 'counter/doubleCount';
+    isValidCount: 'counter/isValidCount';
   }
 >;
 
 /** Mutations */
 export const mutations = {
-  addCount(state: IState, count = 1) {
+  addCount(state: IState, count = 1): void {
     state.count += count;
   },
-  setCount(state: IState, count: number) {
+  setCount(state: IState, count: number): void {
     state.count = count;
   },
-  resetCount(state: IState) {
+  resetCount(state: IState): void {
     state.count = 0;
   }
 };
@@ -43,9 +43,9 @@ export const mutations = {
 export type Mutations = Converter<
   typeof mutations,
   {
-    addCount: 'counter/addCount',
-    setCount: 'counter/setCount',
-    resetCount: 'counter/resetCount'
+    addCount: 'counter/addCount';
+    setCount: 'counter/setCount';
+    resetCount: 'counter/resetCount';
   }
 >;
 
@@ -69,8 +69,8 @@ export const actions = {
 export type Actions = Converter<
   typeof actions,
   {
-    incrementCount: 'counter/incrementCount',
-    saveCount: 'counter/saveCount'
+    incrementCount: 'counter/incrementCount';
+    saveCount: 'counter/saveCount';
   }
 >;
 

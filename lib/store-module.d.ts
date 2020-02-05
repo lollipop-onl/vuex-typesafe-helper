@@ -2,7 +2,7 @@
  * @file ストアモジュールで使用する型
  */
 
-import { ActionContext, Commit } from 'vuex';
+import { ActionContext } from 'vuex';
 import { Actions, Getters, Mutations, State } from "./base";
 import { DefineState, DefineGetters, DefineMutations } from './definition';
 import { Neverable, ToPair } from './utils';
@@ -22,8 +22,8 @@ export interface DefineActionContext<
   M extends Mutations,
   RS = any,
 > extends ActionContext<S, RS> {
-  getters: DefineGetters<G>,
-  commit: DefineMutations<M>,
+  getters: DefineGetters<G>;
+  commit: DefineMutations<M>;
 }
 
 /** ストアモジュールの型を定義する */
@@ -34,8 +34,8 @@ export interface DefineStoreModule<
   M extends Mutations | never,
   A extends Actions | never,
 > {
-  state: DefineState<NS, S>,
-  getters: Neverable<G, {}>,
-  mutations: Neverable<M, {}>,
-  actions: Neverable<A, {}>,
+  state: DefineState<NS, S>;
+  getters: Neverable<G, {}>;
+  mutations: Neverable<M, {}>;
+  actions: Neverable<A, {}>;
 }

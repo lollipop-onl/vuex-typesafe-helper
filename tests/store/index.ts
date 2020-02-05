@@ -14,7 +14,7 @@ export const getters = {};
 
 /** mutations */
 export const mutations = {
-  setLoadingStatus(state: IState, status: boolean) {
+  setLoadingStatus(state: IState, status: boolean): void {
     state.loading = status;
   }
 };
