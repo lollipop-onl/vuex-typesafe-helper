@@ -1,32 +1,13 @@
 {
   "name": "@lollipop-onl/vuex-typesafe-helper",
-  "version": "1.0.0",
   "description": "Vuex minimaly typesafe system",
-  "main": "lib/index.d.ts",
-  "scripts": {
-    "test": "tsc",
-    "lint": "eslint --ext .ts ."
-  },
+  "version": "1.0.0",
   "author": "lollipop.onl",
-  "license": "MIT",
-  "keywords": [
-    "vue",
-    "typescript"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@gitlab.com/lollipop.onl/vuex-typesafe-helper.git"
-  },
   "bugs": {
     "url": "https://gitlab.com/lollipop.onl/vuex-typesafe-helper/issues"
   },
-  "files": [
-    "lib/**/*"
-  ],
   "dependencies": {
-    "typescript": "^3.7.5",
-    "vue": "^2.6.11",
-    "vuex": "^3.1.2"
+    "typescript": "^3.7.5"
   },
   "devDependencies": {
     "@nuxt/types": "^0.6.1",
@@ -37,6 +18,25 @@
     "conditional-type-checks": "^1.0.5",
     "eslint": "^6.8.0",
     "nuxt": "^2.11.0",
-    "vue-property-decorator": "^8.4.0"
+    "vue": "^2.6.11",
+    "vue-property-decorator": "^8.4.0",
+    "vuex": "^3.1.2"
+  },
+  "files": [
+    "lib/**/*"
+  ],
+  "keywords": [
+    "typescript",
+    "vue"
+  ],
+  "license": "MIT",
+  "main": "lib/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/lollipop.onl/vuex-typesafe-helper.git"
+  },
+  "scripts": {
+    "lint": "eslint --ext .ts .",
+    "test": "tsc"
   }
 }
