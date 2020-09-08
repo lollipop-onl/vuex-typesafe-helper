@@ -1,5 +1,7 @@
 # vuex-typesafe-helper
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/11b2d5a4f85645bbb0f1bea8dae63a44)](https://app.codacy.com/manual/lollipop-onl/vuex-typesafe-helper?utm_source=github.com&utm_medium=referral&utm_content=lollipop-onl/vuex-typesafe-helper&utm_campaign=Badge_Grade_Dashboard)
+
 Helper of typesafe Vuex with minimal expansion.
 
 Inspired by [takefumi-yoshii/ts-nuxtjs-express](https://github.com/takefumi-yoshii/ts-nuxtjs-express).
