@@ -1,9 +1,4 @@
----
-#Jekyll configuration
-title: '@lollipop-onl/vuex-typesafe-helper'
----
-
-# @lollipop-onl/vuex-typesafe-helper
+# ドキュメント
 
 [![npm version](https://badge.fury.io/js/%40lollipop-onl%2Fvuex-typesafe-helper.svg)](https://badge.fury.io/js/%40lollipop-onl%2Fvuex-typesafe-helper)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/38eb7615c6b644cf9504674bab46ac87)](https://www.codacy.com/manual/lollipop-onl/vuex-typesafe-helper?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lollipop-onl/vuex-typesafe-helper&amp;utm_campaign=Badge_Grade)
