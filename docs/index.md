@@ -1,5 +1,7 @@
+---
 #Jekyll configuration
 title: '@lollipop-onl/vuex-typesafe-helper'
+---
 
 # @lollipop-onl/vuex-typesafe-helper
 
