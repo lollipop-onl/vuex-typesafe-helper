@@ -1,3 +1,7 @@
+---
+title: '@lollipop-onl/vuex-typesafe-helper'
+---
+
 # @lollipop-onl/vuex-typesafe-helper
 
 [![npm version](https://badge.fury.io/js/%40lollipop-onl%2Fvuex-typesafe-helper.svg)](https://badge.fury.io/js/%40lollipop-onl%2Fvuex-typesafe-helper)
