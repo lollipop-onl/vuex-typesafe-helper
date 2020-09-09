@@ -1,6 +1,5 @@
----
+#Jekyll configuration
 title: プロジェクトへ導入する | @lollipop-onl/vuex-typesafe-helper
----
 
 # プロジェクトへ導入する
 
