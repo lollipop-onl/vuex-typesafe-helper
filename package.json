@@ -27,7 +27,8 @@
   ],
   "keywords": [
     "typescript",
-    "vue"
+    "vue",
+    "vuex"
   ],
   "license": "MIT",
   "main": "lib/index.d.ts",
