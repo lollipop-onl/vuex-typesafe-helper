@@ -1,7 +1,7 @@
 /** 型ユーティリティのテスト */
 
 import { assert, IsExact } from 'conditional-type-checks';
-import { ValueOf, Equal, NeverableDefault, PickKeyWithPayload, PickKeyWithoutPayload } from '../lib/utils';
+import { ValueOf, Equal, NeverableDefault, Namespaced, PickPayload, PickKeyWithoutPayload } from '../lib/utils';
 
 describe('[utils] ValueOf 型', () => {
   test('Standard', () => {
@@ -44,25 +44,18 @@ describe('[utils] NeverableDefault 型', () => {
   });
 });
 
-describe('[utils] PickKeyWithPayload 型', () => {
+describe('[utils] PickPayload 型', () => {
   test('Standard', () => {
-    assert<IsExact<PickKeyWithPayload<{}>, never>>(true);
-    assert<IsExact<PickKeyWithPayload<{
-      foo: (context: any, payload: string) => void;
-    }>, 'foo'>>(true);
-    assert<IsExact<PickKeyWithPayload<{
-      foo: (context: any) => void;
-    }>, never>>(true);
-    assert<IsExact<PickKeyWithPayload<{
-      foo: (context: any) => void;
-      bar: (context: any, payload?: string) => void;
-      baz: (context: any, payload: string) => void;
-      qux: (context: any, payload: string | undefined) => void;
-      quux: (context: any, payload: string | null) => void;
-    }>, 'baz' | 'quux'>>(true);
+    assert<IsExact<PickPayload<(context: any) => void, 0>, 0>>(true);
+    assert<IsExact<PickPayload<(context: any, payload?: 'hello') => void, 0>, 'hello' | undefined>>(true);
+    assert<IsExact<PickPayload<(context: any, payload: 'hello') => void, 0>, 'hello'>>(true);
+    assert<IsExact<PickPayload<(context: any, payload: 'hello' | undefined) => void, 0>, 'hello' | undefined>>(true);
+    assert<IsExact<PickPayload<(context: any, payload: 'hello' | null) => void, 0>, 'hello' | null>>(true);
   });
+});
 
-  describe('[utils] PickKeyWithoutPayload 型', () => {
+describe('[utils] PickKeyWithoutPayload 型', () => {
+  test('Standard', () => {
     assert<IsExact<PickKeyWithoutPayload<{}>, never>>(true);
     assert<IsExact<PickKeyWithoutPayload<{
       foo: (context: any, payload: string) => void;
@@ -77,5 +70,13 @@ describe('[utils] PickKeyWithPayload 型', () => {
       qux: (context: any, payload: string | undefined) => void;
       quux: (context: any, payload: string | null) => void;
     }>, 'foo' | 'bar' | 'qux'>>(true);
+  })
+});
+
+describe('[utils] Namespaced 型', () => {
+  test('Standard', () => {
+    assert<IsExact<Namespaced<'foo', 'bar'>, 'foo/bar'>>(true);
+    assert<IsExact<Namespaced<'foo/bar', 'baz'>, 'foo/bar/baz'>>(true);
+    assert<IsExact<Namespaced<never, 'foo'>, 'foo'>>(true);
   });
 });
