@@ -7,7 +7,7 @@
     "url": "https://gitlab.com/lollipop.onl/vuex-typesafe-helper/issues"
   },
   "dependencies": {
-    "typescript": "^3.7.5"
+    "typescript": "^4.1.0-dev.20200910"
   },
   "devDependencies": {
     "@nuxt/types": "^0.6.1",
@@ -41,6 +41,6 @@
   },
   "scripts": {
     "lint": "eslint --ext .ts .",
-    "test": "tsc"
+    "test": "jest"
   }
 }

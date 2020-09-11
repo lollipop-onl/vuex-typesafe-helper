@@ -1,57 +1,60 @@
-/**
- * @file 型のユーティリティ
- */
+/** 関数型 */
+export type FunctionLike = (...args: any[]) => any;
 
-/** オブジェクトのValueを取り出す */
-export type ValuesOf<T extends Record<string, any>> = T[keyof T];
+/** Booleanを反転する */
+export type NOT<T extends boolean> = T extends true ? false : true;
 
-/** ２つの型が等しいかを判定する */
-export type IsEquals<X, Y> =
+/** BooleanのORを提供する型 */
+export type OR<T extends boolean[]> =
+  T extends readonly [infer C, ...infer R]
+    ? C extends true
+      ? true
+      : R extends boolean[]
+        ? OR<R>
+        : false
+    : false;
+
+/** BooleanのANDを提供する型 */
+export type AND<T extends boolean[]> =
+T extends readonly [infer C, ...infer R]
+  ? C extends false
+    ? false
+    : R extends boolean[]
+      ? OR<R>
+      : false
+  : true;
+
+/** オブジェクト・配列の値の型を共用体で取得 */
+export type ValueOf<T extends Record<string, any>> = T[keyof T];
+
+/** ２つの型が同一か判定する */
+export type Equal<X, Y> =
   (<T>() => T extends X ? 1 : 2) extends
     (<T>() => T extends Y ? 1 : 2) ? true : false;
 
-/** Neverの場合にデフォルトの型を返す */
-export type Neverable<T, D> = IsEquals<T, never> extends true ? D : T;
+/** 型がNeverの場合にデフォルトの型を返す */
+export type NeverableDefault<T, D> = Equal<T, never> extends true ? D : T;
 
 /** ペイロードが必ず存在するプロパティのキーを取り出す */
-export type PickKeyWithPayload<P> = P extends Record<
-    string,
-    (...args: any) => any
-  >
-  ? ValuesOf<
-    { [K in keyof P]: P[K] extends (context: any, payload: NonNullable<any>) => any ? K : undefined }
-    >
-  : never;
+export type PickKeyWithPayload<T extends Record<string, FunctionLike>> =
+  T extends Record<string, FunctionLike>
+    ? ValueOf<{
+      [K in keyof T]: T[K] extends (context: any, payload: infer P) => any
+        ? OR<[Equal<P, unknown>, undefined extends P ? true : false]> extends true
+          ? never
+          : K
+        : never
+    }>
+    : never;
 
-/** ペイロードがない可能性があるプロパティのキーを取り出す */
-export type PickKeyWithoutPayload<P> = P extends Record<
-    string,
-    (...args: any) => any
-    >
-  ? ValuesOf<
-    { [K in keyof P]: P[K] extends (context: any) => any ? K : undefined }
-    >
-  : never;
-
-/** ジェネリックからネストされたオブジェクト型を生成 */
-export type ToObjectFromKeys<
-  V,
-  K1 extends string | undefined = undefined,
-  K2 extends string | undefined = undefined,
-  K3 extends string | undefined = undefined,
-  K4 extends string | undefined = undefined,
-  K5 extends string | undefined = undefined,
-  > =
-  K1 extends undefined
-    ? V
-    : K1 extends string
-    ? { [K in K1]: ToObjectFromKeys<V, K2, K3, K4, K5> }
-    : V;
-
-/** 文字列の配列からネストされたオブジェクト型を生成 */
-export type ToNestedObject<V, Ks extends string[]> = ToObjectFromKeys<V, Ks[0], Ks[1], Ks[2], Ks[3], Ks[4]>;
-
-/** オブジェクトのKeyとValueのペアを取り出す */
-export type ToPair<T extends Record<string, string>> = {
-  [P in keyof T]: [P, T[P]];
-}[keyof T];
+/** ペイロードが存在しない可能性があるプロパティを取り出す */
+export type PickKeyWithoutPayload<T extends Record<string, FunctionLike>> =
+  T extends Record<string, FunctionLike>
+    ? ValueOf<{
+      [K in keyof T]: T[K] extends (context: any, payload: infer P) => any
+        ? OR<[Equal<P, unknown>, undefined extends P ? true : false]> extends true
+          ? K
+          : never
+        : never
+    }>
+    : never;
