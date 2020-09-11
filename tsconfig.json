@@ -9,7 +9,7 @@
     "strict": true,
     "noImplicitAny": true,
     "noEmit": true,
-    "types": ["@types/node", "@nuxt/types"]
+    "types": ["@types/node", "@types/jest", "@nuxt/types"]
   },
-  "includes": ["lib/**/*.ts"]
+  "includes": ["lib/**/*.ts", "tests/**/*.ts"]
 }
