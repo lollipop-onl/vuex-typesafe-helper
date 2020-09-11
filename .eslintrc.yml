@@ -4,9 +4,7 @@ env:
   es6: true
 extends:
   - eslint:recommended
-  - plugin:@typescript-eslint/eslint-recommended
   - plugin:@typescript-eslint/recommended
-  - plugin:@typescript-eslint/recommended-requiring-type-checking
 parser: '@typescript-eslint/parser'
 parserOptions:
   project: tsconfig.json
@@ -14,6 +12,7 @@ plugins:
   - '@typescript-eslint'
 rules:
   '@typescript-eslint/no-explicit-any': 'off'
+  '@typescript-eslint/ban-types': 'off'
 overrides:
   - files: tests/**/*.ts
     env:
