@@ -1,7 +1,7 @@
 {
   "name": "@lollipop-onl/vuex-typesafe-helper",
   "description": "Vuex minimaly typesafe system",
-  "version": "v2.0.0-beta.1",
+  "version": "v2.0.0-beta.2",
   "author": "lollipop-onl <lollipop@simochee.net>",
   "homepage": "https://docs.lollipop.onl/vuex-typesafe-helper",
   "bugs": {
