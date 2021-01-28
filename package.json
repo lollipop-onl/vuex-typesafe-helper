@@ -1,7 +1,7 @@
 {
   "name": "@lollipop-onl/vuex-typesafe-helper",
   "description": "Vuex minimaly typesafe system",
-  "version": "2.0.0-beta.3",
+  "version": "2.0.0-beta.4",
   "author": "lollipop-onl <lollipop@simochee.net>",
   "homepage": "https://docs.lollipop.onl/vuex-typesafe-helper",
   "bugs": {
@@ -32,7 +32,8 @@
     "vuex"
   ],
   "license": "MIT",
-  "main": "lib/index.ts",
+  "main": "lib/index.d.ts",
+  "types": "lib/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/lollipop-onl/vuex-typesafe-helper.git"
