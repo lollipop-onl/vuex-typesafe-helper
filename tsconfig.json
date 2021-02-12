@@ -8,8 +8,9 @@
     "experimentalDecorators": true,
     "strict": true,
     "noImplicitAny": true,
+    "declaration": true,
     "noEmit": true,
     "types": ["@types/node", "@types/jest", "@nuxt/types"]
   },
-  "includes": ["lib/**/*.ts", "tests/**/*.ts"]
+  "includes": ["lib/**/*.ts"]
 }
