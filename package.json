@@ -1,6 +1,6 @@
 {
   "name": "@lollipop-onl/vuex-typesafe-helper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Vuex minimaly typesafe system",
   "main": "lib/index.d.ts",
   "scripts": {
